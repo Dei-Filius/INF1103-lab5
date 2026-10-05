@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 
-INVENTORY_FILE_PATH: str = "inventory.json"
+INVENTORY_FILE_PATH: str = "data/inventory.json"
 inventory_file = Path(INVENTORY_FILE_PATH)
 
 
@@ -14,6 +14,7 @@ def load_inventory() -> dict:
             inventory = json.load(file)
         print("Inventory loaded successfully.")
     else:
+        inventory_file.parent.mkdir(parents=True, exist_ok=True)
         inventory_file.touch()
         inventory = dict()
     return inventory
@@ -24,7 +25,7 @@ def save_inventory(inventory: dict) -> dict:
     print("Saving inventory...")
     with inventory_file.open("w") as file:
         json.dump(inventory, file)
-    print("Inventory saved successfully to inventory.json")
+    print("Inventory saved successfully to", INVENTORY_FILE_PATH)
     return inventory
 
 
